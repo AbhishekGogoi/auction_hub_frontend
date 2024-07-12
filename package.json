@@ -2,6 +2,7 @@
   "name": "auction_hub_frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
     "@stripe/react-stripe-js": "^2.7.3",
