@@ -1,152 +1,194 @@
-jQuery(
-  (function (e) {
-    "use strict";
-    document.addEventListener("touchstart", function (e) {}, false);
-    jQuery(function () {
-      jQuery("body").wrapInner('<div class="horizontalMenucontainer" />');
-      jQuery('<div class="overlapblackbg"></div>').prependTo(".horizontalMenu");
-      jQuery("#horizontal-navtoggle").on("click", function (e) {
-        jQuery("body").toggleClass("active");
-      });
-      jQuery(".overlapblackbg").on("click", function (e) {
-        jQuery("body").removeClass("active");
-      });
-      jQuery(".horizontalMenu > .horizontalMenu-list > li")
-        .has(".sub-menu")
-        .prepend(
-          '<span class="horizontalMenu-click"><i class="horizontalMenu-arrow fa fa-angle-down"></i></span>'
-        );
-      jQuery(".horizontalMenu > .horizontalMenu-list > li")
-        .has(".horizontal-megamenu")
-        .prepend(
-          '<span class="horizontalMenu-click"><i class="horizontalMenu-arrow fa fa-angle-down"></i></span>'
-        );
-      jQuery(".horizontalMenu-click").on("click", function (e) {
-        jQuery(this)
-          .toggleClass("ws-activearrow")
-          .parent()
-          .siblings()
-          .children()
-          .removeClass("ws-activearrow");
-        jQuery(
-          ".horizontalMenu > .horizontalMenu-list > li > .sub-menu, .horizontal-megamenu"
-        )
-          .not(
-            jQuery(this).siblings(
-              ".horizontalMenu > .horizontalMenu-list > li > .sub-menu, .horizontal-megamenu"
-            )
-          )
-          .slideUp("slow");
-        jQuery(this).siblings(".sub-menu").slideToggle("slow");
-        jQuery(this).siblings(".horizontal-megamenu").slideToggle("slow");
-      });
-      jQuery(".horizontalMenu > .horizontalMenu-list > li > ul > li")
-        .has(".sub-menu")
-        .prepend(
-          '<span class="horizontalMenu-click02"><i class="horizontalMenu-arrow fa fa-angle-down"></i></span>'
-        );
-      jQuery(".horizontalMenu > .horizontalMenu-list > li > ul > li > ul > li")
-        .has(".sub-menu")
-        .prepend(
-          '<span class="horizontalMenu-click02"><i class="horizontalMenu-arrow fa fa-angle-down"></i></span>'
-        );
-      jQuery(".horizontalMenu-click02").on("click", function (e) {
-        jQuery(this)
-          .children(".horizontalMenu-arrow")
-          .toggleClass("horizontalMenu-rotate");
-        jQuery(this).siblings("li > .sub-menu").slideToggle("slow");
-      });
-      jQuery(window).on("resize", function (e) {
-        if (jQuery(window).outerWidth() < 992) {
-          jQuery(".horizontalMenu").css("height", jQuery(this).height() + "px");
-          jQuery(".horizontalMenucontainer").css(
-            "min-width",
-            jQuery(this).width() + "px"
-          );
-        } else {
-          jQuery(".horizontalMenu").removeAttr("style");
-          jQuery(".horizontalMenucontainer").removeAttr("style");
-          jQuery("body").removeClass("active");
-          jQuery(
-            ".horizontalMenu > .horizontalMenu-list > li > .horizontal-megamenu, .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu, .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu > li > ul.sub-menu, .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu > li > ul.sub-menu > li > ul.sub-menu"
-          ).removeAttr("style");
-          jQuery(".horizontalMenu-click").removeClass("ws-activearrow");
-          jQuery(".horizontalMenu-click02 > i").removeClass(
-            "horizontalMenu-rotate"
-          );
-        }
-      });
-      jQuery(window).trigger("resize");
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+
+  document.addEventListener("touchstart", function (e) {}, false);
+
+  // Wrap inner body content
+  const body = document.body;
+  const horizontalMenuContainer = document.createElement("div");
+  horizontalMenuContainer.className = "horizontalMenucontainer";
+  while (body.firstChild) {
+    horizontalMenuContainer.appendChild(body.firstChild);
+  }
+  body.appendChild(horizontalMenuContainer);
+
+  // Add overlap black background
+  const overlapBlackBg = document.createElement("div");
+  overlapBlackBg.className = "overlapblackbg";
+  document.querySelector(".horizontalMenu").prepend(overlapBlackBg);
+
+  // Toggle active class on horizontal-navtoggle click
+  document
+    .getElementById("horizontal-navtoggle")
+    .addEventListener("click", function () {
+      body.classList.toggle("active");
     });
 
-    //Mobile Search Box
-    // jQuery(window).on("load", function() {
-    // 	jQuery('.horizontal-header .wssearch').on("click", function() {
-    // 		jQuery(this).toggleClass("wsopensearch");
-    // 	});
-    // 	jQuery("body, .wsopensearch .fa.fa-times").on("click", function() {
-    // 		jQuery(".wssearch").removeClass('wsopensearch');
-    // 	});
-    // 	jQuery(".wssearch, .wssearchform form").on("click", function(e) {
-    // 		e.stopPropagation();
-    // 	});
-    // });
-    // ______________ Horizontal Active Class
-    $(document).ready(function () {
-      $(".horizontalMenu-list li a").each(function () {
-        var pageUrl = window.location.href.split(/[?#]/)[0];
-        if (this.href == pageUrl) {
-          $(this).addClass("active");
-          $(this).parent().addClass("active"); // add active to li of the current link
-          $(this).parent().parent().prev().addClass("active"); // add active class to an anchor
-          $(this).parent().parent().prev().click(); // click the item to make it drop
-        }
-      });
-      $(".horizontal-megamenu li a").each(function () {
-        var pageUrl = window.location.href.split(/[?#]/)[0];
-        if (this.href == pageUrl) {
-          $(this).addClass("active");
-          $(this).parent().addClass("active"); // add active to li of the current link
-          $(this)
-            .parent()
-            .parent()
-            .parent()
-            .parent()
-            .parent()
-            .parent()
-            .prev()
-            .addClass("active"); // add active class to an anchor
-          $(this).parent().parent().prev().click(); // click the item to make it drop
-        }
-      });
-      $(".horizontalMenu-list .sub-menu .sub-menu li a").each(function () {
-        var pageUrl = window.location.href.split(/[?#]/)[0];
-        if (this.href == pageUrl) {
-          $(this).addClass("active");
-          $(this).parent().addClass("active"); // add active to li of the current link
-          $(this).parent().parent().parent().parent().prev().addClass("active"); // add active class to an anchor
-          $(this).parent().parent().prev().click(); // click the item to make it drop
-        }
-      });
-      $(".horizontalMenu-list .sub-menu .sub-menu .sub-menu li a").each(
-        function () {
-          var pageUrl = window.location.href.split(/[?#]/)[0];
-          if (this.href == pageUrl) {
-            $(this).addClass("active");
-            $(this).parent().addClass("active"); // add active to li of the current link
-            $(this)
-              .parent()
-              .parent()
-              .parent()
-              .parent()
-              .parent()
-              .parent()
-              .prev()
-              .addClass("active"); // add active class to an anchor
-            $(this).parent().parent().prev().click(); // click the item to make it drop
-          }
-        }
-      );
+  // Remove active class on overlap black background click
+  overlapBlackBg.addEventListener("click", function () {
+    body.classList.remove("active");
+  });
+
+  // Add horizontalMenu-click elements
+  document
+    .querySelectorAll(".horizontalMenu > .horizontalMenu-list > li")
+    .forEach(function (li) {
+      if (
+        li.querySelector(".sub-menu") ||
+        li.querySelector(".horizontal-megamenu")
+      ) {
+        const span = document.createElement("span");
+        span.className = "horizontalMenu-click";
+        span.innerHTML =
+          '<i class="horizontalMenu-arrow fa fa-angle-down"></i>';
+        li.prepend(span);
+      }
     });
-  })()
-);
+
+  // Handle click event on horizontalMenu-click
+  document.querySelectorAll(".horizontalMenu-click").forEach(function (span) {
+    span.addEventListener("click", function () {
+      span.classList.toggle("ws-activearrow");
+      span.parentElement.siblings.forEach((sib) =>
+        sib.querySelector(".ws-activearrow")?.classList.remove("ws-activearrow")
+      );
+      const subMenu = span.nextElementSibling;
+      const megaMenu = span.nextElementSibling;
+      subMenu && subMenu.classList.toggle("slow");
+      megaMenu && megaMenu.classList.toggle("slow");
+    });
+  });
+
+  // Add horizontalMenu-click02 elements
+  document
+    .querySelectorAll(".horizontalMenu > .horizontalMenu-list > li > ul > li")
+    .forEach(function (li) {
+      if (li.querySelector(".sub-menu")) {
+        const span = document.createElement("span");
+        span.className = "horizontalMenu-click02";
+        span.innerHTML =
+          '<i class="horizontalMenu-arrow fa fa-angle-down"></i>';
+        li.prepend(span);
+      }
+    });
+
+  // Handle click event on horizontalMenu-click02
+  document.querySelectorAll(".horizontalMenu-click02").forEach(function (span) {
+    span.addEventListener("click", function () {
+      span
+        .querySelector(".horizontalMenu-arrow")
+        .classList.toggle("horizontalMenu-rotate");
+      const subMenu = span.nextElementSibling;
+      subMenu && subMenu.classList.toggle("slow");
+    });
+  });
+
+  // Handle window resize event
+  window.addEventListener("resize", function () {
+    if (window.outerWidth < 992) {
+      document.querySelector(".horizontalMenu").style.height =
+        window.innerHeight + "px";
+      document.querySelector(".horizontalMenucontainer").style.minWidth =
+        window.innerWidth + "px";
+    } else {
+      document.querySelector(".horizontalMenu").removeAttribute("style");
+      document
+        .querySelector(".horizontalMenucontainer")
+        .removeAttribute("style");
+      body.classList.remove("active");
+      document
+        .querySelectorAll(
+          ".horizontalMenu > .horizontalMenu-list > li > .horizontal-megamenu, .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu, .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu > li > ul.sub-menu, .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu > li > ul.sub-menu > li > ul.sub-menu"
+        )
+        .forEach(function (menu) {
+          menu.removeAttribute("style");
+        });
+      document
+        .querySelectorAll(".horizontalMenu-click")
+        .forEach(function (span) {
+          span.classList.remove("ws-activearrow");
+        });
+      document
+        .querySelectorAll(".horizontalMenu-click02 > i")
+        .forEach(function (icon) {
+          icon.classList.remove("horizontalMenu-rotate");
+        });
+    }
+  });
+
+  window.dispatchEvent(new Event("resize"));
+
+  // Handle adding active class for menu items based on current URL
+  document
+    .querySelectorAll(".horizontalMenu-list li a")
+    .forEach(function (anchor) {
+      const pageUrl = window.location.href.split(/[?#]/)[0];
+      if (anchor.href === pageUrl) {
+        anchor.classList.add("active");
+        anchor.parentElement.classList.add("active");
+        if (anchor.parentElement.parentElement.previousElementSibling) {
+          anchor.parentElement.parentElement.previousElementSibling.classList.add(
+            "active"
+          );
+          anchor.parentElement.parentElement.previousElementSibling.click();
+        }
+      }
+    });
+
+  document
+    .querySelectorAll(".horizontal-megamenu li a")
+    .forEach(function (anchor) {
+      const pageUrl = window.location.href.split(/[?#]/)[0];
+      if (anchor.href === pageUrl) {
+        anchor.classList.add("active");
+        anchor.parentElement.classList.add("active");
+        if (
+          anchor.parentElement.parentElement.parentElement.parentElement
+            .parentElement.parentElement.previousElementSibling
+        ) {
+          anchor.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add(
+            "active"
+          );
+          anchor.parentElement.parentElement.previousElementSibling.click();
+        }
+      }
+    });
+
+  document
+    .querySelectorAll(".horizontalMenu-list .sub-menu .sub-menu li a")
+    .forEach(function (anchor) {
+      const pageUrl = window.location.href.split(/[?#]/)[0];
+      if (anchor.href === pageUrl) {
+        anchor.classList.add("active");
+        anchor.parentElement.classList.add("active");
+        if (
+          anchor.parentElement.parentElement.parentElement.parentElement
+            .previousElementSibling
+        ) {
+          anchor.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add(
+            "active"
+          );
+          anchor.parentElement.parentElement.previousElementSibling.click();
+        }
+      }
+    });
+
+  document
+    .querySelectorAll(".horizontalMenu-list .sub-menu .sub-menu .sub-menu li a")
+    .forEach(function (anchor) {
+      const pageUrl = window.location.href.split(/[?#]/)[0];
+      if (anchor.href === pageUrl) {
+        anchor.classList.add("active");
+        anchor.parentElement.classList.add("active");
+        if (
+          anchor.parentElement.parentElement.parentElement.parentElement
+            .parentElement.parentElement.previousElementSibling
+        ) {
+          anchor.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add(
+            "active"
+          );
+          anchor.parentElement.parentElement.previousElementSibling.click();
+        }
+      }
+    });
+});
