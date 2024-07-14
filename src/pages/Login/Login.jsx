@@ -56,7 +56,7 @@ const Login = () => {
 
   return (
     <>
-      <MetaData title="Login - Nelami" />
+      <MetaData title="Login - Auction Hub" />
       {/* <!--Breadcrumb Section--> */}
       <section>
         <div

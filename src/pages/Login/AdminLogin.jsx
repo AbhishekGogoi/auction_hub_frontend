@@ -56,7 +56,7 @@ const AdminLogin = () => {
 
   return (
     <>
-      <MetaData title="Admin Login - Nelami" />
+      <MetaData title="Admin Login - Auction Hub" />
       {/* <!--Breadcrumb Section--> */}
       <section>
         <div
