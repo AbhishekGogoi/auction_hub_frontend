@@ -1,5 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+export const toastOptions = {
+  position: "top-right",
+  autoClose: 1000,
+  pauseOnHover: true,
+  draggable: true,
+  theme: "light",
+};
 
 function App() {
   return (
